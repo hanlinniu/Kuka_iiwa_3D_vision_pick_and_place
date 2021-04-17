@@ -66,7 +66,7 @@ roslaunch my_pcl_tutorial calibrate_iiwa_kinect.launch
 ```
 ### To calibrate the relative position between kuka iiwa and realsense camera
 ```
-roslaunch my_pcl_tutorial calibrate_iiwa_realsense
+roslaunch my_pcl_tutorial calibrate_iiwa_realsense.launch
 ```
 
 ### To view the aruco marker result
