@@ -5,15 +5,19 @@ This repository is for using 3D camera and Kuka iiwa robot arm to pick and place
 Demo Video 1: [Link](https://youtu.be/M7GtTTIV9rA) 
 
 Kinect V2 camera intrinsic before and after calibration:
+
 ![](intrinsic_calibration.gif)
 
 Eye to hand calibration:
+
 ![](eye_to_hand_calibration.gif)
 
-Before and after segmenting point cloud
+Before and after segmenting point cloud:
+
 ![](segmenting_point_cloud.gif)
 
-Point cloud matching using ICP
+Point cloud matching using ICP:
+
 ![](point_cloud_matching.gif)
 
 Final grasping demo:
