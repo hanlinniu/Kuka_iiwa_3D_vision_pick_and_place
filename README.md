@@ -1,6 +1,6 @@
 # Kuka_iiwa_3D_vision_pick_and_place
 This repository is for using 3D camera and Kuka iiwa robot arm to pick and place object. You can use realsense camera or Kinect v2 camera.
-
+This work is implemented in paper [3D Vision-guided Pick-and-Place Using Kuka LBR iiwa Robot](https://ieeexplore.ieee.org/abstract/document/9382674) published in 2021 IEEE/SICE International Symposium on System Integration (SII)
 
 Demo Video 1: [Link](https://youtu.be/M7GtTTIV9rA) 
 
