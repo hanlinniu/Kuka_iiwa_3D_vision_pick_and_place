@@ -1,0 +1,3 @@
+./pairwise_incremental_registration table_cube[0-5].pcd
+
+pcl_viewer 1.pcd 2.pcd 3.pcd 4.pcd

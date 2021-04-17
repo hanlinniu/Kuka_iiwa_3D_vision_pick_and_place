@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <arg name="namespace" default="test_two_finger" />
+
+    <!--args port is /dev/ttyUSB1 or /dev/ttyUSB0, use command "dmesg | grep tty" to check -->
+    <node name="two_finger" pkg="robotiq_c_model_control" type="CModelRtuNode.py" args="/dev/ttyUSB1" output="screen"/>
+        
+
+</launch>

@@ -1,0 +1,94 @@
+<launch>
+    <arg name="namespace_prefix" default="iiwa_handeyecalibration" />
+    <arg name="start_simulator" default="false" />
+
+
+    <!-- start the realsense camera -->
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    </include>
+
+    <arg name="eye_on_hand" default="false" />
+
+    <!-- set tf links when eye on base-->
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0.01 0 0 0 0 0 0.01 iiwa_link_ee tracking_marker 100" if="$(eval eye_on_hand == false)"/>      
+    <node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" args="-1 0 1 0 0 0 1 tracking_marker tracking_origin 100" if="$(eval eye_on_hand == false)" />  
+
+    <!-- set tf links when eye on hand-->
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="1 0 0 0 0 0 0.01 iiwa_link_0 tracking_marker 100" if="$(eval eye_on_hand == true)"/>      
+    <node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" args="-1 0 1 0 0 0 1 tracking_marker tracking_origin 100" if="$(eval eye_on_hand == true)" />  
+
+
+    <!-- tracking simulation frequency and noise parameters -->
+    <param name="frequency" value="10" />
+    <param name="translation_noise_stdev" value="0.001" />
+    <param name="rotation_noise_stdev" value="0.0001" />
+
+    <arg name="markerId" default="35"/>
+    <arg name="markerSize" default="0.10"/> <!-- in meter -->
+   
+
+    <arg name="robot_base_frame" value="iiwa_link_0" />
+    <arg name="robot_effector_frame" value="iiwa_link_ee" />
+    <arg name="tracking_base_frame" value="tracking_origin" />
+    <arg name="tracking_marker_frame" value="tracking_marker" />
+
+
+    <!-- start ArUco -->
+    <node name="aruco_tracker" pkg="aruco_ros" type="single">
+        <remap from="/camera_info" to="/camera/color/camera_info" />
+        <remap from="/image" to="/camera/color/image_raw" />
+        <param name="image_is_rectified" value="true"/>
+        <param name="marker_size"        value="$(arg markerSize)"/>
+        <param name="marker_id"          value="$(arg markerId)"/>
+        <param name="reference_frame"    value="$(arg tracking_base_frame)"/>
+        <param name="camera_frame"       value="$(arg tracking_base_frame)"/>
+        <param name="marker_frame"       value="$(arg tracking_marker_frame)" />
+    </node>
+
+
+
+
+    <!-- transformations for the eye-on-base case -->
+    <arg unless="$(arg eye_on_hand)" name="calibration_transformation" default="1 0 0.5 0 0 0 1" />
+    <arg unless="$(arg eye_on_hand)" name="arbitrary_transformation" default="0.12 0.21 0.137 0 0 0 1" />
+    <!-- transformations for the eye-on-hand case -->
+    <arg if="$(arg eye_on_hand)" name="calibration_transformation" default="0.12 0.21 0.137 0 0 0 1" />
+    <arg if="$(arg eye_on_hand)" name="arbitrary_transformation" default="1 0 0.5 0 0 0 1" />
+
+    <!-- start the robot -->
+    <include file="$(find iiwa_moveit)/launch/moveit_planning_execution.launch">
+        <arg name="rviz" value="false" />
+    </include>
+
+
+    <!-- start easy_handeye -->
+    <include ns="/iiwa" file="$(find easy_handeye)/launch/calibrate.launch" >
+        <arg name="start_rviz" value="false" />
+
+        <arg name="namespace_prefix" value="$(arg namespace_prefix)" />
+        <arg name="eye_on_hand" value="false" />
+        <arg name="publish_dummy" value="false" /> <!-- in our case it is done by the tracking simulator -->
+
+        <arg name="tracking_base_frame" value="$(arg tracking_base_frame)" />
+        <arg name="tracking_marker_frame" value="$(arg tracking_marker_frame)" />
+        <arg name="robot_base_frame" value="$(arg robot_base_frame)" />
+        <arg name="robot_effector_frame" value="$(arg robot_effector_frame)" />
+
+        <arg name="freehand_robot_movement" value="false" />
+        <arg name="robot_velocity_scaling" value="0.5" />
+        <arg name="robot_acceleration_scaling" value="0.2" />
+    </include>
+
+    <!-- start rviz with custom configuration -->
+    <node ns="/iiwa" name="$(anon rviz)" pkg="rviz" type="rviz" respawn="true"
+          args="-d $(find easy_handeye)/launch/iiwa_stack_config.rviz" output="screen" />
+
+
+    <!--  set tf before aruco-->    
+   <!--  <node pkg="learning_tf" type="static_tf_broadcaster" name="broadcaster_frame" />-->
+
+   
+
+
+
+</launch>

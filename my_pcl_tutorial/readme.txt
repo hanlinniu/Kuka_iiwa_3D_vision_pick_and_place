@@ -1,0 +1,2 @@
+rosrun my_pcl_tutorial alignment_continental workpiece_0_0.pcd workpiece_3_0.pcd
+

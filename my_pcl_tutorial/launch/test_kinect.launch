@@ -1,0 +1,16 @@
+<launch>
+    <arg name="namespace_prefix" default="iiwa_handeyecalibration" />
+    <arg name="start_simulator" default="false" />
+
+
+    <!-- start the realsense camera -->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
+        <arg name="publish_tf" value="true" />
+    </include>
+
+    
+   
+
+
+
+</launch>

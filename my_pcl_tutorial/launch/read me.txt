@@ -1,0 +1,1 @@
+calibration result yaml file is under here: ~/.ros/easy_handeye

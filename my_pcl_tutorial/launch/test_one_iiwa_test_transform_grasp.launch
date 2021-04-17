@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="eye_on_hand" default="false" />
+    <!-- start the realsense camera -->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
+        <arg name="publish_tf" value="true" />
+    </include>
+
+    
+  <include file="$(find my_pcl_tutorial)/launch/test_2finger_gripper.launch">
+  </include>
+
+
+    <arg name="robot_base_frame" value="iiwa_link_0" />
+    <arg name="robot_effector_frame" value="iiwa_link_ee" />
+    <arg name="tracking_base_frame" value="tracking_origin" />
+    <arg name="tracking_marker_frame" value="tracking_marker" />
+    
+    <arg name="namespace_prefix" default="iiwa_handeyecalibration" />
+    <arg if="$(arg eye_on_hand)" name="namespace" value="$(arg namespace_prefix)_eye_on_hand" />
+    <arg unless="$(arg eye_on_hand)" name="namespace" value="$(arg namespace_prefix)_eye_on_base" />
+
+    <!--it is possible to override the link names saved in the yaml file in case of name clashes, for example-->
+    <arg name="inverse" default="false" />
+    
+    <!--publish hand-eye calibration-->
+    <group ns="$(arg namespace)">
+        <param name="eye_on_hand" value="$(arg eye_on_hand)" />
+        <param unless="$(arg eye_on_hand)" name="robot_base_frame" value="iiwa_link_0" />
+        <param if="$(arg eye_on_hand)" name="robot_effector_frame" value="iiwa_link_ee" />
+        <param name="tracking_base_frame" value="tracking_origin" />
+        <param name="inverse" value="$(arg inverse)" />
+        <node name="$(anon handeye_publisher)" pkg="easy_handeye" type="publish.py" output="screen"/>
+    </group>
+
+
+  <arg name="tool_name" default="tool"/> <!-- Name of the tool we are going to use -->
+  
+  <!-- Parameters to pass to the ROS node -->
+  <arg name="move_group" default="manipulator"/>
+  <arg name="ee_link" default="iiwa_link_ee"/>   <!-- tool_link_ee -->
+  <arg name="ros_rate" default="0.1"/>
+  
+  <param name="/iiwa/toolName" type="string" value="$(arg tool_name)" /> <!--Sunrise tool-->
+  
+
+
+  <!--  This loads the robot description  -->
+  <include file="$(find iiwa_moveit)/launch/moveit_planning_execution.launch">
+    <arg name="sim" value="false"/>
+  </include>
+
+
+
+  <node ns="iiwa" name="initialize_pose" pkg="my_pcl_tutorial" type="test_one_transform_iiwa_pose_grasp" respawn="false" output="screen"  launch-prefix="gnome-terminal --command">
+    <param name="move_group" value="$(arg move_group)"/>
+    <param name="ee_link" value="$(arg ee_link)"/>
+    <param name="ros_rate" value="$(arg ros_rate)"/>
+  </node>
+
+
+
+
+
+</launch>

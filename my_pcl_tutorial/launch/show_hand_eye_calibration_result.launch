@@ -1,0 +1,28 @@
+<launch>
+    <arg name="namespace_prefix" default="iiwa_handeyecalibration" />
+    <arg name="start_simulator" default="false" />
+
+    <!-- publish result -->
+    <include file="$(find my_pcl_tutorial)/launch/kuka_iiwa_publish.launch">
+    </include>
+
+    <!-- start the robot -->
+    <include file="$(find iiwa_moveit)/launch/moveit_planning_execution.launch">
+        <arg name="rviz" value="false" />
+    </include>
+
+
+
+    <!-- start rviz with custom configuration -->
+    <node ns="/iiwa" name="$(anon rviz)" pkg="rviz" type="rviz" respawn="true"
+          args="-d $(find easy_handeye)/launch/iiwa_stack_config.rviz" output="screen" />
+
+
+    <!--  set tf before aruco-->    
+   <!--  <node pkg="learning_tf" type="static_tf_broadcaster" name="broadcaster_frame" />-->
+
+   
+
+
+
+</launch>

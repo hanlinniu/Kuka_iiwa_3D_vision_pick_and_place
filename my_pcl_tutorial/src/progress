@@ -1,0 +1,108 @@
+
+vector3 is translation
+quaternion and matrix3*3 and rotation is rotation
+
+
+iiwa_pose type: geometry_msgs/PoseStamped.msg    
+geometry_msgs/Point position: x y z
+geometry_msgs/Quaternion orientation: x y z w
+http://docs.ros.org/api/geometry_msgs/html/msg/Quaternion.html
+
+
+method 1:
+1, get the iiwa_ee pose in camera frame   (using tf::transformPose, tf::transformQuaternion, tf::transformVector)
+http://docs.ros.org/jade/api/tf/html/c++/classtf_1_1Transformer.html#a6dc93e11fe58ce61fe231ee4cbf185f1
+
+2, the translate from workpiece_1 to workpiece_2 in camera frame is known, then we can calculate the translated pose of iiwa_ee in camera frame  
+3, calculate the translated pose of iiwa_ee in robot frame   (using tf::transformPose, tf::transformQuaternion, tf::transformVector)
+
+
+method 2:
+1, calculate the translation of camera frame in robot frame
+2, calculate the translated pose of iiwa_ee in robot frame
+
+
+method 3:
+1, calculate translation and rotation of the object pose under camera frame
+
+
+2, calculate translation to vector, then transform vector from camera frame to robot base frame:
+
+
+2.1 need a lookup transform function after hand-eye calibration
+tf::StampedTransform req_to_cam;
+listener_.lookupTransform(req.base_frame, p->header.frame_id, ros::Time(0), req_to_cam);
+
+2.2 make stamped vector, then transform vector in different frames
+http://wiki.ros.org/geometry_msgs
+
+
+3, calculate rotation to quaternion, then transform quaternion from camera frame to robot base frame
+
+
+4, transform the initial pose of robot end effector under robot base frame based on the translation and quaternion calculated from steps 2 and 3.
+
+
+%% what else I need
+I need a tf transform publisher  : 
+    br = tf.TransformBroadcaster()
+    br.sendTransform()
+
+I need to listener_lookupTransform :
+    tf::TransformListener listener;
+    listener.lookupTransform()    
+
+
+how to make a stamped pose?
+
+how to transform a stamped pose?
+
+
+pose to tf:
+    def pose_to_tf(cls, pose, frame_name, parent_frame, time=None):
+        """
+        Generate a TF from a given pose, frame, and parent.
+        """
+        assert pose is not None, 'Cannot have None for pose.'
+        tf = TransformStamped()
+        tf.child_frame_id = frame_name
+        if time is None:
+            time = rospy.Time.now()
+        tf.header.stamp = time
+        tf.header.frame_id = parent_frame
+
+        tf.transform.translation = pose.position
+        tf.transform.rotation = pose.orientation
+
+        return tf
+
+
+%%% some useful information to know:
+
+
+tf::Transform cam_to_target;
+tf::poseMsgToTF(p->pose.pose, cam_to_target);
+
+tf::StampedTransform req_to_cam;
+listener_.lookupTransform(req.base_frame, p->header.frame_id, ros::Time(0), req_to_cam);
+
+tf::Transform req_to_target;
+req_to_target = req_to_cam * cam_to_target;
+
+tf::poseTFToMsg(req_to_target, res.pose);
+
+// this is the code used in command_robot_testtf_moveit.cpp
+http://wiki.ros.org/tf2/Tutorials/Quaternions
+
+      tf2::convert(current_cartesian_position.pose.orientation, q_orig);
+
+      tf2::Quaternion q_orig, q_rot, q_new;
+      double r=0, p=0, y=direction*0.2;  // Rotate the previous pose by 180* about X
+      q_rot.setRPY(r, p, y);
+
+      q_new = q_rot*q_orig;  // Calculate the new orientation
+      q_new.normalize();
+
+      // Stuff the new rotation back into the pose. This requires conversion into a msg type
+      tf2::convert(q_new, current_cartesian_position.pose.orientation);
+      command_cartesian_position = current_cartesian_position;
