@@ -95,3 +95,15 @@ cp pose.txt pose_unload.txt
 ```
 roslaunch my_pcl_tutorial test_five_iiwa_test_transform_grasp.launch 
 ```
+### Paper
+If you use this code in your research, please cite our SII paper:
+```
+@inproceedings{niu20213d,
+  title={3D Vision-guided Pick-and-Place Using Kuka LBR iiwa Robot},
+  author={Niu, Hanlin and Ji, Ze and Zhu, Zihang and Yin, Hujun and Carrasco, Joaquin},
+  booktitle={2021 IEEE/SICE International Symposium on System Integration (SII)},
+  pages={592--593},
+  year={2021},
+  organization={IEEE}
+}
+}
