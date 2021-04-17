@@ -29,7 +29,7 @@ Final grasping demo:
 
 ![](grasping_demo.gif)
 
-
+### setting up kuka iiwa package: [Link](https://github.com/IFL-CAMP/iiwa_stack/wiki)
 ### for installing the kinect camera ros driver: [Link](https://github.com/code-iai/iai_kinect2)
 ### installing easy hand eye package: [Link](https://github.com/IFL-CAMP/easy_handeye)
 ### installing robotiq gripper driver: [Link](https://github.com/ros-industrial/robotiq)
