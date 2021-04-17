@@ -1,8 +1,24 @@
 # Kuka_iiwa_3D_vision_pick_and_place
 This repository is for using 3D camera and Kuka iiwa robot arm to pick and place object. You can use realsense camera or Kinect v2 camera.
 
-Demo video: 
+
 Demo Video 1: [Link](https://youtu.be/M7GtTTIV9rA) 
+
+Kinect V2 camera intrinsic before and after calibration:
+![](intrinsic_calibration.gif)
+
+Eye to hand calibration:
+![](eye_to_hand_calibration.gif)
+
+Before and after segmenting point cloud
+![](segmenting_point_cloud.gif)
+
+Point cloud matching using ICP
+![](point_cloud_matching.gif)
+
+Final grasping demo:
+![](grasping_demo.gif)
+
 
 # for installing the kinect camera ros driver
 https://github.com/code-iai/iai_kinect2
@@ -20,7 +36,7 @@ sudo apt-get install ros-kinetic-ros-control ros-kinetic-ros-controllers
 sudo apt-get install ros-kinetic-moveit
 
 
-# for kinect camera calibration, the images data for calibration is under kinect_cal_data
+# for kinect v2 camera, you need intrinsic calibration, the images data for calibration is under kinect_cal_data
 useful link: https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration#calibrating-the-kinect-one
 
 
