@@ -30,11 +30,9 @@ Final grasping demo:
 ![](grasping_demo.gif)
 
 
-### for installing the kinect camera ros driver
-https://github.com/code-iai/iai_kinect2
-
-### installing [easy hand eye](https://github.com/IFL-CAMP/easy_handeye)
-### installing [robotiq gripper driver](https://github.com/ros-industrial/robotiq)
+### for installing the kinect camera ros driver: [Link](https://github.com/code-iai/iai_kinect2)
+### installing easy hand eye package: [Link](https://github.com/IFL-CAMP/easy_handeye)
+### installing robotiq gripper driver: [Link](https://github.com/ros-industrial/robotiq)
 
 ### necessary library:
 ```
@@ -49,8 +47,8 @@ sudo apt-get install ros-kinetic-ros-control ros-kinetic-ros-controllers
 sudo apt-get install ros-kinetic-moveit
 ```
 
-### for kinect v2 camera, you need intrinsic calibration, the images data for calibration is under kinect_cal_data
-useful link: https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration#calibrating-the-kinect-one
+### for kinect v2 camera, you need intrinsic calibration, the images data for calibration is under kinect_cal_data: [Link](https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration#calibrating-the-kinect-one)
+
 
 ## Git clone this project 
 
