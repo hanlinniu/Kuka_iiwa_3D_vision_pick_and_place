@@ -1,6 +1,8 @@
 # Kuka_iiwa_3D_vision_pick_and_place
 This repository is for using 3D camera and Kuka iiwa robot arm to pick and place object. You can use realsense camera or Kinect v2 camera.
 
+Demo video: 
+Demo Video 1: [Link](https://youtu.be/M7GtTTIV9rA) 
 
 # for installing the kinect camera ros driver
 https://github.com/code-iai/iai_kinect2
