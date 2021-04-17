@@ -81,7 +81,7 @@ cp pose.txt pose_unload.txt
 ```
 ### manually control kuka iiwa to the grasping position and save its pose as pose.txt under directory ~/.ros
 
-# Use the following command to control kuka iiwa to grasp the randomly placed workpiece
+### Use the following command to control kuka iiwa to grasp the randomly placed workpiece
 ```
 roslaunch my_pcl_tutorial test_five_iiwa_test_transform_grasp.launch 
 ```
