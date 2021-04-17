@@ -36,6 +36,10 @@ Final grasping demo:
 
 ### necessary library:
 ```
+sudo apt-cache search ros-kinetic-control*
+sudo apt-get install ros-kinetic-control-toolbox
+sudo ap install ros-kinetic-soem
+sudo apt install ros-kinetic-soem
 sudo apt-get install ros-kinetic-controller-interface
 sudo apt-get install ros-kinetic-controller-manager
 sudo apt-get install ros-kinetic-joint-limits-interface
