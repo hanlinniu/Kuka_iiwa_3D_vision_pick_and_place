@@ -30,12 +30,13 @@ Final grasping demo:
 ![](grasping_demo.gif)
 
 
-# for installing the kinect camera ros driver
+### for installing the kinect camera ros driver
 https://github.com/code-iai/iai_kinect2
 
-# installing [easy hand eye](https://github.com/IFL-CAMP/easy_handeye)
+### installing [easy hand eye](https://github.com/IFL-CAMP/easy_handeye)
+### installing [robotiq gripper driver](https://github.com/ros-industrial/robotiq)
 
-# necessary library:
+### necessary library:
 ```
 sudo apt-get install ros-kinetic-controller-interface
 sudo apt-get install ros-kinetic-controller-manager
@@ -51,6 +52,13 @@ sudo apt-get install ros-kinetic-moveit
 ### for kinect v2 camera, you need intrinsic calibration, the images data for calibration is under kinect_cal_data
 useful link: https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration#calibrating-the-kinect-one
 
+## Git clone this project 
+
+```
+$ cd ~/catkin_ws/src/
+$ git clone https://github.com/hanlinniu/Kuka_iiwa_3D_vision_pick_and_place.git
+$ cd ~/catkin_ws && catkin_make
+```
 
 ### To calibrate the relative position between kuka iiwa and kinect v2 camera
 ```
